@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import CheckBox from "./components/CheckBox";
+
+const data = [
+  { id: 1, title: "Find Another Way" },
+  { id: 2, title: "Acquire the Discarded Lenses" },
+  { id: 3, title: "Install the Discarded Lenses" },
+  { id: 4, title: "Activate the Oraculum" },
+];
 
 function App() {
+  const [isChecked, setIsChecked] = useState([]);
+
+  const changeData = (id) => {
+    const changedValue = [...isChecked];
+    if (isChecked.indexOf(id) > -1)
+      changedValue.splice(isChecked.indexOf(id), 1);
+    else changedValue.push(id);
+
+    setIsChecked(changedValue);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="background">
+      <div className="section">
+        <div className="top">
+          <div className="top_box"></div>
+          <h2>
+            <i>Kill Breanna Ashworth</i>
+          </h2>
+        </div>
+
+        <div className="section">
+          {data.map(({ id, title }, index) => (
+            <CheckBox
+              key={index}
+              id={id}
+              title={title}
+              isChecked={isChecked.indexOf(id) > -1}
+              changeData={changeData}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
